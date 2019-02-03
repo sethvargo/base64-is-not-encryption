@@ -195,12 +195,34 @@ This document describes the steps for my demo to showcase how Kubernetes secrets
     sudo systemctl start kubelet
     ```
 
+1. Configure etcdctls
+
+    ```text
+    kubectl --context=secrets-default exec -it -n kube-system etcd-minikube -- /bin/sh -c 'cat <<"EOF" > ./etcdctl
+    export ETCDCTL_API=3
+    export ETCDCTL_CACERT=/var/lib/minikube/certs/etcd/ca.crt
+    export ETCDCTL_CERT=/var/lib/minikube/certs/etcd/server.crt
+    export ETCDCTL_KEY=/var/lib/minikube/certs/etcd/server.key
+    exec /usr/local/bin/etcdctl "$@"
+    EOF
+    chmod +x ./etcdctl'
+
+    kubectl --context=secrets-vault exec -it -n kube-system etcd-minikube -- /bin/sh -c 'cat <<"EOF" > ./etcdctl
+    export ETCDCTL_API=3
+    export ETCDCTL_CACERT=/var/lib/minikube/certs/etcd/ca.crt
+    export ETCDCTL_CERT=/var/lib/minikube/certs/etcd/server.crt
+    export ETCDCTL_KEY=/var/lib/minikube/certs/etcd/server.key
+    exec /usr/local/bin/etcdctl "$@"
+    EOF
+    chmod +x ./etcdctl'
+    ```
+
 ## Demo
 
 ### Default secrets
 
 ```
-kubectl config set-context secrets-default
+kubectl config use-context secrets-default
 ```
 
 ```
@@ -214,16 +236,12 @@ kubectl exec -it -n kube-system etcd-minikube /bin/sh
 ```
 
 ```
-export ETCDCTL_API=3
-export ETCDCTL_CACERT=/var/lib/minikube/certs/etcd/ca.crt
-export ETCDCTL_CERT=/var/lib/minikube/certs/etcd/server.crt
-export ETCDCTL_KEY=/var/lib/minikube/certs/etcd/server.key
-etcdctl get /registry/secrets/default/demo
+./etcdctl get /registry/secrets/default/demo
 ```
 
 
 ## Encrypted envelope
 
-kubectl config set-context secrets-vault
+kubectl config use-context secrets-vault
 
 (Same as above then)
