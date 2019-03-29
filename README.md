@@ -222,26 +222,19 @@ This document describes the steps for my demo to showcase how Kubernetes secrets
 ### Default secrets
 
 ```
-kubectl config use-context secrets-default
+./bin/create-secret-default.sh
 ```
 
 ```
-kubectl create secret generic demo \
-  --from-literal=username=sethvargo \
-  --from-literal=password=s3cr3t
+./bin/access-etcd-default.sh
 ```
-
-```
-kubectl exec -it -n kube-system etcd-minikube /bin/sh
-```
-
-```
-./etcdctl get /registry/secrets/default/demo
-```
-
 
 ## Encrypted envelope
 
-kubectl config use-context secrets-vault
+```
+./bin/create-secret-vault.sh
+```
 
-(Same as above then)
+```
+./bin/access-etcd-vault.sh
+```
