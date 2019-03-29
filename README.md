@@ -24,7 +24,7 @@ This document describes the steps for my demo to showcase how Kubernetes secrets
       --cpus=2 \
       --memory=4096 \
       --vm-driver=hyperkit \
-      --kubernetes-version=v1.13.3
+      --kubernetes-version=v1.14.0
     ```
 
 1. Start Vault envelope configuration cluster:
@@ -35,7 +35,7 @@ This document describes the steps for my demo to showcase how Kubernetes secrets
       --cpus=2 \
       --memory=4096 \
       --vm-driver=hyperkit \
-      --kubernetes-version=v1.13.3
+      --kubernetes-version=v1.14.0
     ```
 
 1. SSH
@@ -47,7 +47,7 @@ This document describes the steps for my demo to showcase how Kubernetes secrets
 1. Install Vault
 
     ```text
-    curl -sfLo vault.zip https://releases.hashicorp.com/vault/1.0.2/vault_1.0.2_linux_amd64.zip
+    curl -sfLo vault.zip https://releases.hashicorp.com/vault/1.1.0/vault_1.1.0_linux_amd64.zip
     unzip vault.zip
     sudo mv vault /usr/bin/
     sudo chmod +x /usr/bin/vault
