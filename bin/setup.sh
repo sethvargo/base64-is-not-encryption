@@ -20,6 +20,8 @@ minikube start \
 
 minikube ssh -p=secrets-vault "$(cat ./bin/bootstrap.sh)"
 
+sleep 10
+
 kubectl --context=secrets-default exec -it -n kube-system etcd-minikube -- /bin/sh -c 'cat <<"EOF" > ./etcdctl
 export ETCDCTL_API=3
 export ETCDCTL_CACERT=/var/lib/minikube/certs/etcd/ca.crt
