@@ -64,7 +64,7 @@ aptq-get upgrade
 kubeadm reset --force
 kubeadm init \
   --apiserver-advertise-address="0.0.0.0" \
-  --kubernetes-version="1.14.0" \
+  --kubernetes-version="1.15.0" \
   --pod-network-cidr="192.168.0.0/16"
 
 cat > /etc/profile.d/kubeadm.sh <<"EOF"
