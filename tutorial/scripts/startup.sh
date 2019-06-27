@@ -158,6 +158,9 @@ EOF
 
 sudo sed -i '/- kube-apiserver/ a \ \ \ \ # - --encryption-provider-config=/etc/kubernetes/pki/encryption-kms.conf' /etc/kubernetes/manifests/kube-apiserver.yaml
 
+# Slightly nicer login
+touch ~/.hushlogin
+
 # Mark done
 mkdir -p /etc/cloud-init
 touch /etc/cloud-init/finished
