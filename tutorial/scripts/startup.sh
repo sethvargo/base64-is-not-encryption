@@ -52,13 +52,16 @@ systemctl daemon-reload
 systemctl restart docker
 
 # Kubernetes
+aptq-get --purge remove kubelet kubeadm kubectl kubernetes-cni || true
 curl -sLf https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat > /etc/apt/sources.list.d/kubernetes.list <<"EOF"
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 aptq-get update
 aptq-get install kubelet kubeadm kubectl kubernetes-cni
+aptq-get upgrade
 
+kubeadm reset --force
 kubeadm init \
   --apiserver-advertise-address="0.0.0.0" \
   --kubernetes-version="1.14.0" \
