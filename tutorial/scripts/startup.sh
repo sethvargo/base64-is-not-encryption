@@ -53,18 +53,21 @@ systemctl restart docker
 
 # Kubernetes
 aptq-get --purge remove kubelet kubeadm kubectl kubernetes-cni || true
+rm -rf ~/.kube/config
+rm -rf /etc/kubernetes
+
 curl -sLf https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat > /etc/apt/sources.list.d/kubernetes.list <<"EOF"
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 aptq-get update
-aptq-get install kubelet kubeadm kubectl kubernetes-cni
+aptq-get install docker kubelet kubeadm kubectl kubernetes-cni
 aptq-get upgrade
 
 kubeadm reset --force
 kubeadm init \
   --apiserver-advertise-address="0.0.0.0" \
-  --kubernetes-version="1.15.0" \
+  --kubernetes-version="latest" \
   --pod-network-cidr="192.168.0.0/16"
 
 cat > /etc/profile.d/kubeadm.sh <<"EOF"
@@ -73,9 +76,8 @@ EOF
 source /etc/profile.d/kubeadm.sh
 chmod 0644 /etc/kubernetes/admin.conf
 
-# Install calico
-kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
-kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+# Install networking
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 # Allow scheduling on the master
 kubectl taint nodes --all node-role.kubernetes.io/master-

@@ -29,6 +29,6 @@ google-region() {
 
 google-zone() {
   (
-    echo "us-west1-b"
+    echo "us-east1-b"
   )
 }
