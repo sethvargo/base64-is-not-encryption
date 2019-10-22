@@ -8,15 +8,13 @@ minikube start \
   --profile=secrets-default \
   --cpus=2 \
   --memory=4096 \
-  --vm-driver=hyperkit \
-  --kubernetes-version=v1.14.0
+  --vm-driver=hyperkit
 
 minikube start \
   --profile=secrets-vault \
   --cpus=2 \
   --memory=4096 \
-  --vm-driver=hyperkit \
-  --kubernetes-version=v1.14.0
+  --vm-driver=hyperkit
 
 minikube ssh -p=secrets-vault "$(cat ./bin/bootstrap.sh)"
 
